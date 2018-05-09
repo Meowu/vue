@@ -21,6 +21,11 @@ function matches (pattern: string | RegExp | Array<string>, name: string): boole
   return false
 }
 
+/**
+ * added by wuchengjie 2018.05.09
+ * @param {componentInstance} keepAliveInstance
+ * @param {Function} filter <return Boolean>
+ */
 function pruneCache (keepAliveInstance: any, filter: Function) {
   const { cache, keys, _vnode } = keepAliveInstance
   for (const key in cache) {
