@@ -50,10 +50,10 @@ export default class VNode {
     this.functionalScopeId = undefined
     this.key = data && data.key
     this.componentOptions = componentOptions
-    this.componentInstance = undefined
+    this.componentInstance = undefined  // 一个组件实例， 可以调用 $destroy 这些方法。
     this.parent = undefined
     this.raw = false
-    this.isStatic = false
+    this.isStatic = false  // 构建静态 tree 时会让其 vnode 节点 isStatic 为 true
     this.isRootInsert = true
     this.isComment = false
     this.isCloned = false

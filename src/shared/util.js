@@ -90,6 +90,7 @@ export function toNumber (val: string): number | string {
 /**
  * Make a map and return a function for checking if a key
  * is in that map.
+ * 包装一个对象，返回一个函数检查特定的值是否在该对象中。
  */
 export function makeMap (
   str: string,
@@ -137,6 +138,7 @@ export function hasOwn (obj: Object | Array<*>, key: string): boolean {
 
 /**
  * Create a cached version of a pure function.
+ * 缓存一个纯函数。执行该函数时，如果执行过则直接取值。
  */
 export function cached<F: Function> (fn: F): F {
   const cache = Object.create(null)

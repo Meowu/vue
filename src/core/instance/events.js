@@ -127,7 +127,7 @@ export function eventsMixin (Vue: Class<Component>) {
     let cbs = vm._events[event]
     if (cbs) {
       cbs = cbs.length > 1 ? toArray(cbs) : cbs
-      const args = toArray(arguments, 1)
+      const args = toArray(arguments, 1) // 把给触发的事件传入的参数转换成一个数组。
       for (let i = 0, l = cbs.length; i < l; i++) {
         try {
           cbs[i].apply(vm, args)

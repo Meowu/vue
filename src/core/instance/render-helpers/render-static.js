@@ -16,7 +16,7 @@ export function renderStatic (
   let tree = cached[index]
   // if has already-rendered static tree and not inside v-for,
   // we can reuse the same tree by doing a shallow clone.
-  if (tree && !isInFor) {
+  if (tree && !isInFor) {    // reuse if trees are cached, but why can be inside v-for ?
     return Array.isArray(tree)
       ? cloneVNodes(tree)
       : cloneVNode(tree)
@@ -47,7 +47,7 @@ function markStatic (
 ) {
   if (Array.isArray(tree)) {
     for (let i = 0; i < tree.length; i++) {
-      if (tree[i] && typeof tree[i] !== 'string') {
+      if (tree[i] && typeof tree[i] !== 'string') { // 树节点必须是 vnode 。
         markStaticNode(tree[i], `${key}_${i}`, isOnce)
       }
     }
@@ -56,6 +56,7 @@ function markStatic (
   }
 }
 
+// 构造静态节点，isStatic 为 true， 再赋予一个 key 。
 function markStaticNode (node, key, isOnce) {
   node.isStatic = true
   node.key = key

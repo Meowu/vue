@@ -10,7 +10,7 @@ export function initUse (Vue: GlobalAPI) {
     }
 
     // additional parameters
-    const args = toArray(arguments, 1)
+    const args = toArray(arguments, 1)  // 注册插件时传入的参数。
     args.unshift(this)
     if (typeof plugin.install === 'function') {
       plugin.install.apply(plugin, args)

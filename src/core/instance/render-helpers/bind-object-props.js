@@ -27,7 +27,7 @@ export function bindObjectProps (
       )
     } else {
       if (Array.isArray(value)) {
-        value = toObject(value)
+        value = toObject(value)  // 值为对象的数组转化成单个对象。
       }
       let hash
       for (const key in value) {
