@@ -298,10 +298,11 @@ function normalizeProps (options: Object, vm: ?Component) {
 
 /**
  * Normalize all injections into Object-based format
+ * inject 只接受对象或者数组形式，该方法把全部 injections 规范化为对象形式。
  */
 function normalizeInject (options: Object, vm: ?Component) {
   const inject = options.inject
-  const normalized = options.inject = {}
+  const normalized = options.inject = {}  // 引用同一个对象，所以更改 normalized 即可
   if (Array.isArray(inject)) {
     for (let i = 0; i < inject.length; i++) {
       normalized[inject[i]] = { from: inject[i] }
@@ -324,6 +325,7 @@ function normalizeInject (options: Object, vm: ?Component) {
 
 /**
  * Normalize raw function directives into object format.
+ * 在自定义指令时如果传入的是 function ，则将其变成通用的对象形式，使其在 bind 和 update 两个钩子触发相同的行为。
  */
 function normalizeDirectives (options: Object) {
   const dirs = options.directives
@@ -410,6 +412,7 @@ export function resolveAsset (
   }
   const assets = options[type]
   // check local registration variations first
+  // 先检查本地是否有注册，没有则从原型链中查找。
   if (hasOwn(assets, id)) return assets[id]
   const camelizedId = camelize(id)
   if (hasOwn(assets, camelizedId)) return assets[camelizedId]
