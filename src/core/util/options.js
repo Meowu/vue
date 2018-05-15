@@ -25,7 +25,7 @@ import {
  * how to merge a parent option value and a child option
  * value into the final value.
  */
-const strats = config.optionMergeStrategies
+const strats = config.optionMergeStrategies  // { [key: string]: Function }
 
 /**
  * Options with restrictions
@@ -44,6 +44,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 /**
  * Helper that recursively merges two data objects together.
+ * 递归合并对象，也可能是 $data 。
  */
 function mergeData (to: Object, from: ?Object): Object {
   if (!from) return to
@@ -53,7 +54,7 @@ function mergeData (to: Object, from: ?Object): Object {
     key = keys[i]
     toVal = to[key]
     fromVal = from[key]
-    if (!hasOwn(to, key)) {
+    if (!hasOwn(to, key)) {  // ??
       set(to, key, fromVal)
     } else if (isPlainObject(toVal) && isPlainObject(fromVal)) {
       mergeData(toVal, fromVal)
@@ -107,6 +108,7 @@ export function mergeDataOrFn (
   }
 }
 
+// 合并 $data 处理函数。
 strats.data = function (
   parentVal: any,
   childVal: any,
