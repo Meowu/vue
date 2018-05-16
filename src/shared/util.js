@@ -44,7 +44,7 @@ export function isObject (obj: mixed): boolean %checks {
 const _toString = Object.prototype.toString
 
 export function toRawType (value: any): string {
-  return _toString.call(value).slice(8, -1)
+  return _toString.call(value).slice(8, -1)  // [object String] => String
 }
 
 /**
@@ -90,7 +90,7 @@ export function toNumber (val: string): number | string {
 /**
  * Make a map and return a function for checking if a key
  * is in that map.
- * 包装一个对象，返回一个函数检查特定的值是否在该对象中。
+ * 包装一个对象，返回一个函数检查特定的值是否在该对象中。 makeMap('filters,slots,mixins')...
  */
 export function makeMap (
   str: string,
