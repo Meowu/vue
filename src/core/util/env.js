@@ -54,7 +54,7 @@ export const isServerRendering = () => {
 export const devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__
 
 /* istanbul ignore next */
-export function isNative (Ctor: any): boolean {
+export function isNative (Ctor: any): boolean { // for example:  Array.prototype.constructor.toString() => "function Array() { [native code] }"
   return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
 }
 
@@ -144,6 +144,7 @@ export const nextTick = (function () {
   }
 })()
 
+// Set polyfill. 在不支持 Set 的时候模仿实现一个 Set 。
 let _Set
 /* istanbul ignore if */ // $flow-disable-line
 if (typeof Set !== 'undefined' && isNative(Set)) {

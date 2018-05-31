@@ -23,9 +23,9 @@ export const arrayMethods = Object.create(arrayProto)
 .forEach(function (method) {
   // cache original method
   const original = arrayProto[method]
-  def(arrayMethods, method, function mutator (...args) {
-    const result = original.apply(this, args)
-    const ob = this.__ob__
+  def(arrayMethods, method, function mutator (...args) { // 使用了 ... 把传进来的参数变成一个数组。
+    const result = original.apply(this, args)  // what's the context of `this` .
+    const ob = this.__ob__  // 这个是啥， 实现响应式的关键。
     let inserted
     switch (method) {
       case 'push':
