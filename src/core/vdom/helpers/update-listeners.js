@@ -3,6 +3,8 @@
 import { warn } from 'core/util/index'
 import { cached, isUndef } from 'shared/util'
 
+// 在 render 函数中，对于 .passive, .capture, .once 事件修饰符，Vue 提供了对应的前缀用于 `on` ：
+// .passive => &, .capture => !, .once => ~, .capture.once/.once.capture => ~!
 const normalizeEvent = cached((name: string): {
   name: string,
   once: boolean,
@@ -67,6 +69,7 @@ export function updateListeners (
       on[name] = old
     }
   }
+  // 移除所有的未定义事件
   for (name in oldOn) {
     if (isUndef(on[name])) {
       event = normalizeEvent(name)

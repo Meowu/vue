@@ -44,16 +44,18 @@ export function updateComponentListeners (
 
 export function eventsMixin (Vue: Class<Component>) {
   const hookRE = /^hook:/
+  // 实例方法 $on 可以监听事件或者数组事件。
   Vue.prototype.$on = function (event: string | Array<string>, fn: Function): Component {
     const vm: Component = this
     if (Array.isArray(event)) {
       for (let i = 0, l = event.length; i < l; i++) {
-        this.$on(event[i], fn)
+        this.$on(event[i], fn) // 这时候不需要 push 到 vm._events[event] 中？是因为递归调用 this.$on 在下一个条件中会被添加？
       }
     } else {
       (vm._events[event] || (vm._events[event] = [])).push(fn)
       // optimize hook:event cost by using a boolean flag marked at registration
       // instead of a hash lookup
+      // 如何有钩子方法则设置该属性为 true ，不需要再哈希查找方法名。从而达到优化的目的。
       if (hookRE.test(event)) {
         vm._hasHookEvent = true
       }
