@@ -16,7 +16,7 @@ export function initMixin (Vue: Class<Component>) {
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     // a uid
-    vm._uid = uid++
+    vm._uid = uid++  // uid 作用？每个 Vue 实例的唯一标识？
 
     let startTag, endTag
     /* istanbul ignore if */
@@ -118,7 +118,7 @@ function resolveModifiedOptions (Ctor: Class<Component>): ?Object {
   const extended = Ctor.extendOptions
   const sealed = Ctor.sealedOptions
   for (const key in latest) {
-    if (latest[key] !== sealed[key]) {
+    if (latest[key] !== sealed[key]) {   // 有更改，如果 latest 中所有的键值跟 sealed 一样，此时 modified 是 undefined。
       if (!modified) modified = {}
       modified[key] = dedupe(latest[key], extended[key], sealed[key])
     }
@@ -126,6 +126,13 @@ function resolveModifiedOptions (Ctor: Class<Component>): ?Object {
   return modified
 }
 
+/**
+ *
+ * @param {Object} latest
+ * @param {Object} extended
+ * @param {Object} sealed
+ * return Array
+ */
 function dedupe (latest, extended, sealed) {
   // compare latest and sealed to ensure lifecycle hooks won't be duplicated
   // between merges

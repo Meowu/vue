@@ -142,7 +142,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
 
 export function mountComponent (
   vm: Component,
-  el: ?Element,
+  el: ?Element,   // CSS 选择器或者 HTMLElement 实例。可选的，还可以在创建实例后再调用 vm.$mount() 实例方法挂载。
   hydrating?: boolean
 ): Component {
   vm.$el = el

@@ -16,7 +16,7 @@ function Vue (options) {
 
 initMixin(Vue)
 stateMixin(Vue)
-eventsMixin(Vue)
+eventsMixin(Vue)  // 初始化实例的事件处理方法： $emit, $off, $once, $on 。
 lifecycleMixin(Vue)
 renderMixin(Vue)
 

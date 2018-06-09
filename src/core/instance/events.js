@@ -77,6 +77,7 @@ export function eventsMixin (Vue: Class<Component>) {
   Vue.prototype.$off = function (event?: string | Array<string>, fn?: Function): Component {
     const vm: Component = this
     // all
+    // 如果没有提供参数，移除所有的事件监听器
     if (!arguments.length) {
       vm._events = Object.create(null)
       return vm
@@ -89,10 +90,11 @@ export function eventsMixin (Vue: Class<Component>) {
       return vm
     }
     // specific event
-    const cbs = vm._events[event]
+    const cbs = vm._events[event]  // array
     if (!cbs) {
       return vm
     }
+    // 如果只提供了事件，则移除该事件所有的监听器。
     if (arguments.length === 1) {
       vm._events[event] = null
       return vm
@@ -103,8 +105,8 @@ export function eventsMixin (Vue: Class<Component>) {
       let i = cbs.length
       while (i--) {
         cb = cbs[i]
-        if (cb === fn || cb.fn === fn) {
-          cbs.splice(i, 1)
+        if (cb === fn || cb.fn === fn) { // 为何会有 cb.fn ，在什么情况下会添加该属性。
+          cbs.splice(i, 1) // 如果提供了事件和函数，则移除事件的该回调函数。
           break
         }
       }
@@ -116,6 +118,7 @@ export function eventsMixin (Vue: Class<Component>) {
     const vm: Component = this
     if (process.env.NODE_ENV !== 'production') {
       const lowerCaseEvent = event.toLowerCase()
+      // 在 DOM 模板中不能使用驼峰事件名，因为 HTML 是大小写敏感的。
       if (lowerCaseEvent !== event && vm._events[lowerCaseEvent]) {
         tip(
           `Event "${lowerCaseEvent}" is emitted in component ` +
@@ -127,9 +130,10 @@ export function eventsMixin (Vue: Class<Component>) {
       }
     }
     let cbs = vm._events[event]
+    // 调用监听该事件的所有回调并传递全部参数。
     if (cbs) {
       cbs = cbs.length > 1 ? toArray(cbs) : cbs
-      const args = toArray(arguments, 1) // 把给触发的事件传入的参数转换成一个数组。
+      const args = toArray(arguments, 1) // 将触发事件时传入的参数转换成一个数组。
       for (let i = 0, l = cbs.length; i < l; i++) {
         try {
           cbs[i].apply(vm, args)
