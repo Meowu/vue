@@ -1,7 +1,7 @@
 /* @flow */
 
-import { warn } from 'core/util/index'
-import { cached, isUndef } from 'shared/util'
+import { warn } from 'core/util/index';
+import { cached, isUndef } from 'shared/util';
 
 // 在 render 函数中，对于 .passive, .capture, .once 事件修饰符，Vue 提供了对应的前缀用于 `on` ：
 // .passive => &, .capture => !, .once => ~, .capture.once/.once.capture => ~!
@@ -60,7 +60,7 @@ export function updateListeners (
         vm
       )
     } else if (isUndef(old)) {
-      if (isUndef(cur.fns)) {
+      if (isUndef(cur.fns)) {  // cur.fns 指的是什么，如何传进来的。
         cur = on[name] = createFnInvoker(cur)
       }
       add(event.name, cur, event.once, event.capture, event.passive)
